@@ -1,0 +1,128 @@
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath "com.github.johnrengelman:shadow:8.1.1"
+    }
+}
+
+group = 'me.abdiskiosk'
+version = '1.0.0'
+
+apply plugin: 'java'
+apply plugin: "com.github.johnrengelman.shadow"
+compileJava.options.encoding = 'UTF-8'
+
+
+configurations {
+    compileClasspath {
+        extendsFrom compileOnly
+        canBeResolved = true
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'org.yaml:snakeyaml:2.2'
+    }
+}
+
+compileJava {
+    options.compilerArgs << '-parameters'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url {
+            uri("https://hub.spigotmc.org/nexus/content/groups/public/")
+        }
+    }
+    maven {
+        url {
+            uri("https://storehouse.okaeri.eu/repository/maven-releases/")
+        }
+    }
+    maven { url 'https://maven.enginehub.org/repo/' }
+    maven { url 'https://repo.codemc.io/repository/maven-releases/' }
+    maven { url 'https://jitpack.io' }
+
+
+    mavenLocal()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.xerial:sqlite-jdbc:3.45.1.0'
+    testImplementation 'com.h2database:h2:2.2.224'
+    testImplementation 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    //Add snakeyaml
+    implementation'com.j256.ormlite:ormlite-jdbc:6.1'
+    implementation('org.yaml:snakeyaml:2.2') {
+        version {
+            strictly '2.2'
+        }
+    }
+    implementation 'dev.triumphteam:triumph-gui:3.1.7'
+    implementation 'eu.okaeri:okaeri-platform-bukkit:0.4.19' exclude group: "com.google"
+    implementation 'eu.okaeri:okaeri-i18n-minecraft-adventure:5.1.0' exclude group: "com.google"
+    implementation 'eu.okaeri:okaeri-configs-yaml-snakeyaml:5.0.1' exclude group: "com.google"
+
+
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    compileOnly 'com.sk89q.worldguard:worldguard-legacy:6.1.3-SNAPSHOT'
+    compileOnly 'org.projectlombok:lombok:1.18.22' exclude group: 'org.yaml'
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7" exclude group: 'org.yaml'
+}
+
+task myCodeJar(type: Jar) {
+    from sourceSets.main.output
+    archiveClassifier.set('myCode')
+}
+// Task to create a JAR for all bundled dependencies
+task dependenciesJar(type: com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+    configurations = [project.configurations.compileClasspath, project.configurations.runtimeClasspath]
+
+
+    from sourceSets.main.output
+    exclude('**/dk/setups/**')
+    exclude('plugin.yml')
+
+    relocate 'eu.okaeri', 'dk.setups.libs.celle.eu.okaeri'
+    relocate 'org.yaml', 'dk.setups.libs.celle.org.yaml'
+    relocate 'com.j256', 'dk.setups.libs.celle.com.j256'
+    relocate 'net.kyori', 'dk.setups.libs.celle.net.kyori'
+    relocate 'dev.triumphteam', 'dk.setups.libs.celle.dev.triumphteam'
+    relocate 'com.google', 'dk.setups.libs.celle.com.google'
+
+    archiveClassifier.set('dependencies')
+}
+
+// Task to create a JAR for both your own code and all bundled dependencies
+task combinedJar(type: com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+    relocate 'eu.okaeri', 'dk.setups.libs.celle.eu.okaeri'
+    relocate 'org.yaml', 'dk.setups.libs.celle.org.yaml'
+    relocate 'com.j256', 'dk.setups.libs.celle.com.j256'
+    relocate 'net.kyori', 'dk.setups.libs.celle.net.kyori'
+    relocate 'dev.triumphteam', 'dk.setups.libs.celle.dev.triumphteam'
+    relocate 'com.google.gson', 'dk.setups.libs.celle.com.google'
+
+    from sourceSets.main.output
+    configurations = [project.configurations.runtimeClasspath]
+    archiveClassifier.set('combined')
+}
+
+build.dependsOn /*myCodeJar, dependenciesJar,*/ combinedJar

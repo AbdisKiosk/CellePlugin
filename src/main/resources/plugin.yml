@@ -1,0 +1,49 @@
+name: Celler
+main: dk.setups.celle.CellePlugin
+author: AbdisKiosk
+version: 1.0.0
+website: https://www.setups.dk
+depend: [WorldGuard, WorldEdit, Vault]
+permissions:
+  cell.command.unrent:
+    description: Giver dig adgang til at opsige din celle
+    default: true
+  cell.command.unrent.other:
+    description: Giver dig adgang til at opsige andres celler
+    default: op
+  cell.command.member.add:
+    description: Giver dig adgang til at tilføje medlemmer til din celle
+    default: true
+  cell.command.member.add.other:
+    description: Giver dig adgang til at tilføje andre spillere til andres celler
+    default: op
+  cell.command.member.remove:
+    description: Giver dig adgang til at fjerne medlemmer fra din celle
+    default: true
+  cell.command.member.remove.other:
+    description: Giver dig adgang til at fjerne andre spillere fra andres celler
+    default: op
+  cell.command.info:
+    description: Giver dig adgang til at se information om din celle
+    default: true
+  cell.command.info.other:
+    description: Giver dig adgang til at se information om andres celler
+    default: true
+  cell.command.list:
+    description: Giver dig adgang til at se en liste over dine celler
+    default: true
+  cell.command.list.other:
+    description: Giver dig adgang til at se en liste over andres celler
+    default: true
+  cell.command.teleport:
+    description: Giver dig adgang til at teleportere til din celle
+    default: op
+  cell.command.teleport.other:
+    description: Giver dig adgang til at teleportere til andres celler
+    default: op
+  cell.admin:
+    description: Giver dig adgang til administrator kommandoer
+    default: op
+  #TODO: Tilføj resten
+
+
