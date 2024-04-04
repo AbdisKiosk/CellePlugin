@@ -22,9 +22,7 @@ import java.util.*;
 })
 public class Config extends OkaeriConfig {
 
-    @Comment("Din licensenøgle, som du kan finde på https://setups.dk/profile")
-    private String license = "License";
-    @Comment("Hvor mange celler kan en spiller højest eje? Den tjekker permissionsne i rækkefølge, så hvis en spiller har donator, vil den bruge den værdi.")
+        @Comment("Hvor mange celler kan en spiller højest eje? Den tjekker permissionsne i rækkefølge, så hvis en spiller har donator, vil den bruge den værdi.")
     private Map<String, Integer> maxCellsPerPlayer = getDefaultMaxCellsPerPlayer();
     private Map<String, Integer> getDefaultMaxCellsPerPlayer() {
         Map<String, Integer> maxCellsPerPlayer = new LinkedHashMap<>();
