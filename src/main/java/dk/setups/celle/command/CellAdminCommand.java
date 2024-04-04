@@ -1,7 +1,6 @@
 package dk.setups.celle.command;
 
 import com.sk89q.worldedit.regions.CuboidRegion;
-import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import dk.setups.celle.cell.*;
 import dk.setups.celle.cell.log.CellLogFilter;
@@ -11,6 +10,8 @@ import dk.setups.celle.config.LangConfig;
 import dk.setups.celle.database.StoreManager;
 import dk.setups.celle.gui.cell.logs.CellLogsGUI;
 import dk.setups.celle.gui.cell.logs.CellLogsGUIState;
+import dk.setups.celle.sign.AvailableCellsGUISign;
+import dk.setups.celle.sign.CellSign;
 import dk.setups.celle.util.WorldEditUtils;
 import dk.setups.celle.util.cell.CellFactory;
 import dk.setups.celle.util.cell.CellUtils;
@@ -28,13 +29,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -298,6 +298,47 @@ public class CellAdminCommand implements CommandService {
         i18n.get(lang.getCommandCeaGroupInfoMessage())
                 .with("group", group)
                 .sendTo(player);
+    }
+
+    @Executor(pattern = "#{commandCeaSignGUICreateAlias}", description = "${commandCeaSignGUICreateDescription}", usage = "${commandCeaSignGUICreateUsage}")
+    @Async
+    public void createGUISign(@Context Player player, @Arg String region) {
+        Block target = player.getTargetBlock((Set<Material>) null, 5);
+        if(target == null || !target.getType().equals(Material.WALL_SIGN)) {
+            i18n.get(lang.getCommandCeaSignGuiCreateNotLookingAtSign()).sendTo(player);
+            return;
+        }
+        Location location = target.getLocation();
+        if(stores.getAvailableCellsGuiSignStore().getSign(target.getLocation()).isPresent()) {
+            i18n.get(lang.getCommandCeaSignGUICreateAlias()).sendTo(player);
+            return;
+        }
+        if(!worldGuard.getRegionByName(location.getWorld(), region).isPresent()) {
+            i18n.get(lang.getCommandCeaSignGuiCreateRegionNotFound())
+                    .with("region", region)
+                    .sendTo(player);
+            return;
+        }
+        AvailableCellsGUISign sign =
+                new AvailableCellsGUISign(location.getBlockX(), location.getBlockY(), location.getBlockZ(),
+                        region, location.getWorld().getName());
+        stores.getAvailableCellsGuiSignStore().persist(sign);
+        i18n.get(lang.getCommandCeaSignGuiCreateSuccess()).sendTo(player);
+    }
+
+    @Executor(pattern = "#{commandCeaSignGUIDeleteAlias}", description = "${commandCeaSignGUIDeleteDescription}", usage = "${commandCeaSignGUIDeleteUsage}")
+    @Async
+    public void deleteGUISign(@Context Player player) {
+        Block target = player.getTargetBlock((Set<Material>) null, 5);
+        if(target == null || !target.getType().equals(Material.WALL_SIGN)
+            || !stores.getAvailableCellsGuiSignStore().getSign(target.getLocation()).isPresent()) {
+            i18n.get(lang.getCommandCeaSignGuiDeleteSignNotFound()).sendTo(player);
+            return;
+        }
+        stores.getAvailableCellsGuiSignStore().getSign(target.getLocation()).ifPresent(sign -> {
+            stores.getAvailableCellsGuiSignStore().delete(sign.getId());
+            i18n.get(lang.getCommandCeaSignGuiDeleteSuccess()).sendTo(player);
+        });
     }
 
     @Executor(pattern = "#{commandCeaReloadAlias}", description = "${commandCeaReloadDescription}", usage = "${commandCeaReloadUsage}")

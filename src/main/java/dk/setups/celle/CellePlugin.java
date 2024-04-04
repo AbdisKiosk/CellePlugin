@@ -15,6 +15,7 @@ import dk.setups.celle.config.LangConfig;
 import dk.setups.celle.database.StoreManager;
 import dk.setups.celle.gui.cell.CellAdminGUI;
 import dk.setups.celle.gui.cell.logs.CellLogsGUI;
+import dk.setups.celle.gui.region.CellsInRegionGUI;
 import dk.setups.celle.task.TaskUpdateCells;
 import dk.setups.celle.util.PlaceholderResolvers;
 import dk.setups.celle.util.WorldGuardUtils;
@@ -84,9 +85,11 @@ public class CellePlugin extends OkaeriBukkitPlugin {
     }
 
     @Planned(ExecutionPhase.POST_SETUP)
-    public void injectGuis(Injector injector, CellAdminGUI cellAdminGUI, CellLogsGUI cellLogsGUI) {
+    public void injectGuis(Injector injector, CellAdminGUI cellAdminGUI, CellLogsGUI cellLogsGUI,
+                           CellsInRegionGUI cellsInRegionGUI) {
         injector.injectFields(cellAdminGUI);
         injector.injectFields(cellLogsGUI);
+        injector.injectFields(cellsInRegionGUI);
     }
 
     @Planned(ExecutionPhase.PRE_SETUP)

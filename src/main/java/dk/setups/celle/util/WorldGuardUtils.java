@@ -53,6 +53,13 @@ public class WorldGuardUtils {
     }
 
     public Collection<ProtectedRegion> getRegionsIn(World world, ProtectedRegion region) {
+        if(region.getId().equals("__global__")) {
+            return WorldGuardPlugin.inst()
+                    .getRegionManager(world)
+                    .getRegions()
+                    .values();
+        }
+
          Collection<ProtectedRegion> all = WorldGuardPlugin.inst()
                 .getRegionManager(world)
                 .getRegions()

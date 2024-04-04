@@ -2,6 +2,7 @@ package dk.setups.celle.migrate;
 
 import dk.setups.celle.cell.*;
 import dk.setups.celle.database.UserStore;
+import dk.setups.celle.sign.CellSign;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

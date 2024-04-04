@@ -1,4 +1,4 @@
-package dk.setups.celle.cell;
+package dk.setups.celle.sign;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

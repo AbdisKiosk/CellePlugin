@@ -1,10 +1,14 @@
 package dk.setups.celle.listener;
 
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import dk.setups.celle.cell.Cell;
 import dk.setups.celle.command.CellCommand;
 import dk.setups.celle.database.StoreManager;
 import dk.setups.celle.gui.cell.CellAdminGUI;
 import dk.setups.celle.gui.cell.CellGUIState;
+import dk.setups.celle.gui.region.CellsInRegionGUI;
+import dk.setups.celle.gui.region.CellsInRegionGUIState;
+import dk.setups.celle.util.WorldGuardUtils;
 import dk.setups.celle.util.cell.CellRentManager;
 import dk.setups.celle.util.CooldownUtil;
 import dk.setups.celle.util.SignContentCreator;
@@ -34,11 +38,11 @@ public class SignClickListener implements Listener {
     private @Inject CellCommand cellCommand;
     private @Inject Plugin plugin;
     private @Inject CellAdminGUI gui;
+    private @Inject CellsInRegionGUI availableCellsGui;
+    private @Inject WorldGuardUtils worldGuard;
 
     @EventHandler
     public void onSignClick(PlayerInteractEvent event) {
-        SignContentCreator object = new SignContentCreator();
-
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
         if(!isSign(block)) {
@@ -53,6 +57,9 @@ public class SignClickListener implements Listener {
                     block.getX(), block.getY(), block.getZ(), block.getWorld().getName());
 
             if(!cell.isPresent()) {
+                stores.getAvailableCellsGuiSignStore().getSign(block.getLocation()).ifPresent(sign -> {
+                    availableCellsGui.create(new CellsInRegionGUIState(player, sign.getRegion(worldGuard))).open(player);
+                });
                 return;
             }
 

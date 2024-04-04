@@ -18,17 +18,21 @@ public class VaultUtils {
     private Economy economy;
 
     @PostConstruct
-    public void init(Plugin plugin) {
-        RegisteredServiceProvider<Economy> economyProvider =
-                plugin.getServer().getServicesManager().getRegistration(Economy.class);
+    public void registerEconomy(Plugin plugin) {
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            //Wait for plugins to load
 
-        if(economyProvider == null) {
-            logger.severe("Intet økonomiplugin fundet. Slår pluginnet fra.");
-            Bukkit.getPluginManager().disablePlugin(plugin);
-            return;
-        }
+            RegisteredServiceProvider<Economy> economyProvider =
+                    plugin.getServer().getServicesManager().getRegistration(Economy.class);
 
-        economy = economyProvider.getProvider();
+            if (economyProvider == null) {
+                logger.severe("Intet økonomiplugin fundet. Slår pluginnet fra.");
+                Bukkit.getPluginManager().disablePlugin(plugin);
+                return;
+            }
+            economy = economyProvider.getProvider();
+        }, 10L);
+
     }
 
     public boolean tryTakeMoney(Player player, double amount) {

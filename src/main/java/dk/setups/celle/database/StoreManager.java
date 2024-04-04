@@ -9,8 +9,9 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import dk.setups.celle.cell.*;
 import dk.setups.celle.cell.log.CellLog;
-import dk.setups.celle.config.Config;
-import eu.okaeri.injector.annotation.Inject;
+import dk.setups.celle.sign.AvailableCellsSign;
+import dk.setups.celle.sign.AvailableCellsGUISign;
+import dk.setups.celle.sign.CellSign;
 import eu.okaeri.injector.annotation.PostConstruct;
 import eu.okaeri.platform.core.annotation.Component;
 import lombok.Getter;
@@ -41,6 +42,10 @@ public class StoreManager {
     private CellTeleportStore teleportStore;
     @Getter
     private CellLogStore logStore;
+    @Getter
+    private AvailableCellSignStore availableCellsSignStore;
+    @Getter
+    private AvailableCellGUISignStore availableCellsGuiSignStore;
 
     private ConnectionSource connectionSource;
 
@@ -80,6 +85,12 @@ public class StoreManager {
             if(!tableNames.contains(CellLog.TABLE_NAME)) {
                 TableUtils.createTable(connectionSource, CellLog.class);
             }
+            if(!tableNames.contains(AvailableCellsSign.TABLE_NAME)) {
+                TableUtils.createTable(connectionSource, AvailableCellsSign.class);
+            }
+            if(!tableNames.contains(AvailableCellsGUISign.TABLE_NAME)) {
+                TableUtils.createTable(connectionSource, AvailableCellsGUISign.class);
+            }
         } catch(Exception ex) {
             logger.severe("========================================");
             logger.severe("=                                      =");
@@ -102,6 +113,8 @@ public class StoreManager {
         this.regionStore = new RegionStore(DaoManager.createDao(connectionSource, CellRegion.class), this, logger);
         this.teleportStore = new CellTeleportStore(DaoManager.createDao(connectionSource, CellTeleport.class), this, logger);
         this.logStore = new CellLogStore(DaoManager.createDao(connectionSource, CellLog.class), this, logger);
+        this.availableCellsSignStore = new AvailableCellSignStore(DaoManager.createDao(connectionSource, AvailableCellsSign.class), this, logger);
+        this.availableCellsGuiSignStore = new AvailableCellGUISignStore(DaoManager.createDao(connectionSource, AvailableCellsGUISign.class), this, logger);
     }
 
     private Set<String> getCreatedTables() throws SQLException {

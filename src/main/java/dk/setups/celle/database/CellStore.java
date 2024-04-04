@@ -5,7 +5,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import dk.setups.celle.cell.Cell;
 import dk.setups.celle.cell.CellMember;
-import dk.setups.celle.cell.CellSign;
+import dk.setups.celle.sign.CellSign;
 import dk.setups.celle.cell.CellUser;
 import dk.setups.celle.util.cell.CellUtils;
 import eu.okaeri.injector.annotation.Inject;

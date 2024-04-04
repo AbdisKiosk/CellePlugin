@@ -216,6 +216,21 @@ public class LangConfig extends LocaleConfig {
             "  &a- &r{group.rentedOwnerSignLines-3}\n" +
             "  &a- &r{group.rentedOwnerSignLines-4}";
 
+    private String commandCeaSignGUICreateAlias = "sign create gui *";
+    private String commandCeaSignGUICreateDescription = "Opretter et skilt, som viser en GUI med ledige celler.";
+    private String commandCeaSignGUICreateUsage = "cea sign create gui <region>";
+    private String commandCeaSignGuiCreateNotLookingAtSign = "&cDu skal kigge på et skilt.";
+    private String commandCeaSignGuiCreateSignAlreadyExists = "&cDer findes allerede et skilt på den placering.";
+    private String commandCeaSignGuiCreateRegionNotFound = "&cDer findes ikke en region med navnet &4{region}&c.";
+    private String commandCeaSignGuiCreateSuccess = "&aSkiltet er et blevet oprettet.";
+
+    private String commandCeaSignGUIDeleteAlias = "sign delete gui";
+    private String commandCeaSignGUIDeleteDescription = "Sletter et skilt, som viser en GUI med ledige celler.";
+    private String commandCeaSignGUIDeleteUsage = "cea sign delete gui";
+    private String commandCeaSignGuiDeleteNotLookingAtSign = "&cDu skal kigge på et skilt.";
+    private String commandCeaSignGuiDeleteSignNotFound = "&cDer findes ikke et skilt på den placering.";
+    private String commandCeaSignGuiDeleteSuccess = "&aSkiltet er blevet slettet.";
+
     private String commandCeaReloadAlias = "reload";
     private String commandCeaReloadDescription = "Genindlæser pluginnet.";
     private String commandCeaReloadUsage = "cea reload";
