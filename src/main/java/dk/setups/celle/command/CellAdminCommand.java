@@ -300,8 +300,6 @@ public class CellAdminCommand implements CommandService {
                 .sendTo(player);
     }
 
-
-
     @Executor(pattern = "#{commandCeaReloadAlias}", description = "${commandCeaReloadDescription}", usage = "${commandCeaReloadUsage}")
     @Sync
     public void reload(@Context CommandSender sender) {

@@ -1,5 +1,6 @@
 package dk.setups.celle.util;
 
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import dk.setups.celle.cell.*;
 import dk.setups.celle.cell.log.CellLog;
 import eu.okaeri.injector.annotation.Inject;
@@ -80,6 +81,8 @@ public class PlaceholderResolvers {
         placeholders.registerPlaceholder(Date.class, "format-short", (c, __, ___) -> time.formatDateShort(c));
         placeholders.registerPlaceholder(Date.class, "left-long", (c, __, ___) -> time.formatLongLeft(c));
         placeholders.registerPlaceholder(Date.class, "left-short", (c, __, ___) -> time.formatConsiseLeft(c));
+
+        placeholders.registerPlaceholder(ProtectedRegion.class, "name", (c, __, ___) -> c.getId());
     }
 
     private String formatMembers(Collection<CellMember> members) {
