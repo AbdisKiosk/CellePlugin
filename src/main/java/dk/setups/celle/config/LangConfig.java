@@ -33,15 +33,15 @@ public class LangConfig extends LocaleConfig {
     private String commandCellUnrentAlias = "slet ?";
     private String commandCellUnrentDescription = "Sletter lejen af en celle.";
     private String commandCellUnrentUsage = "ce slet [celle]";
-    private String commandCellUnrentNotRented = "&cDu har ikke lejet cellen &4{cell}&c.";
+    private String commandCellUnrentNotRented = "&cDu har ikke lejet cellen &4{cell.name}&c.";
     private String commandCellUnrentSuccess = "&aDu har nu slettet lejen af cellen &2{cell.name}&a.";
 
     private String commandCellMemberAddAlias = "add * ?";
     private String commandCellMemberAddDescription = "Tilføjer en spiller til en celle.";
     private String commandCellMemberAddUsage = "ce add <spiller> [celle]";
     private String commandCellMemberAddSuccess = "&aSpilleren &2{target} &aer blevet tilføjet til cellen &2{cell.name}&a.";
-    private String commandCellMemberAddAlreadyMember = "&4{target} &aer allerede medlem af &2{cell}&a.";
-    private String commandCellMemberAddNotOwner = "&cDu ejer ikke &4{cell}&c.";
+    private String commandCellMemberAddAlreadyMember = "&4{target} &aer allerede medlem af &2{cell.name}&a.";
+    private String commandCellMemberAddNotOwner = "&cDu ejer ikke &4{cell.name}&c.";
 
     private String commandCellMemberRemoveAlias = "remove * ?";
     private String commandCellMemberRemoveDescription = "Fjerner en spiller fra en celle.";
@@ -88,8 +88,8 @@ public class LangConfig extends LocaleConfig {
     private String commandCellTeleportAlias = "tp *;teleport *";
     private String commandCellTeleportDescription = "Teleporter dig til en celle.";
     private String commandCellTeleportUsage = "ce tp <celle>";
-    private String commandCellTeleportNotMember = "&cDu er ikke medlem af &4{cell}&c.";
-    private String commandCellTeleportNoTeleport = "&cDer er ingen teleport til &4{cell}&c.";
+    private String commandCellTeleportNotMember = "&cDu er ikke medlem af &4{cell.name}&c.";
+    private String commandCellTeleportNoTeleport = "&cDer er ingen teleport til &4{cell.name}&c.";
     /**
      * Celle Admin Kommandoer
      */
@@ -115,7 +115,7 @@ public class LangConfig extends LocaleConfig {
     private String commandCeaCellSetSignDescription = "Sætter skiltet på en celle til det skilt, du kigger på.";
     private String commandCeaCellSetSignUsage = "cea cell set sign <celle>";
     private String commandCeaCellSetSignNotLookingAtSign = "&cDu skal kigge på et skilt.";
-    private String commandCeaCellSetSignSuccess = "&aSatte skiltet for &2{cell}&a.";
+    private String commandCeaCellSetSignSuccess = "&aSatte skiltet for &2{cell.name}&a.";
 
     private String commandCeaCellSetTeleportAlias = "cell set teleport *";
     private String commandCeaCellSetTeleportDescription = "Sætter cellens teleporterings-lokationen til den placering";
@@ -250,14 +250,14 @@ public class LangConfig extends LocaleConfig {
                                         "\n&aUdløber: &2{cell.time.format-long}" +
                                         "\n&aMedlemmer: &2{members}";
 
-    private String cellAttemptRentAlreadyRented = "&cCellen &4{cell} &cer allerede udlejet.";
+    private String cellAttemptRentAlreadyRented = "&cCellen &4{cell.name} &cer allerede udlejet.";
     private String cellAttemptRentMaxRented = "&cDu har allerede udlejet det maksimale antal celler i gruppen &4{group}&c.";
-    private String cellAttemptRentNoPermission = "&cDu har ikke adgang til at leje cellen &4{cell} &ci gruppen &4{group}&c.";
-    private String cellAttemptRentNotEnoughMoney = "&cDu har ikke nok penge til at leje &4{cell}&c.";
-    private String cellAttemptRentSuccess = "&aDu har nu lejet cellen &2{cell}&a.";
+    private String cellAttemptRentNoPermission = "&cDu har ikke adgang til at leje cellen &4{cell.name} &ci gruppen &4{group}&c.";
+    private String cellAttemptRentNotEnoughMoney = "&cDu har ikke nok penge til at leje &4{cell.name}&c.";
+    private String cellAttemptRentSuccess = "&aDu har nu lejet cellen &2{cell.name}&a.";
 
-    private String cellAttemptExtendNotOwned = "&cDu ejer ikke cellen &4{cell}&c.";
-    private String cellAttemptExtendFullyExtended = "&cDu kan ikke forlænge lejen af &4{cell} &cmere.";
-    private String cellAttemptExtendNotEnoughMoney = "&cDu har ikke nok penge til at forlænge lejen af &4{cell}&c.";
-    private String cellAttemptExtendSuccess = "&aDu har nu forlænget lejen af &2{cell}&a.";
+    private String cellAttemptExtendNotOwned = "&cDu ejer ikke cellen &4{cell.name}&c.";
+    private String cellAttemptExtendFullyExtended = "&cDu kan ikke forlænge lejen af &4{cell.name} &cmere.";
+    private String cellAttemptExtendNotEnoughMoney = "&cDu har ikke nok penge til at forlænge lejen af &4{cell.name}&c.";
+    private String cellAttemptExtendSuccess = "&aDu har nu forlænget lejen af &2{cell.name}&a.";
 }
