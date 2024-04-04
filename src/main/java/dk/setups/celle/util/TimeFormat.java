@@ -85,7 +85,7 @@ public class TimeFormat {
                 .with("hour", formatTo2Chars(date.getHours()))
                 .with("minute", formatTo2Chars(date.getMinutes()))
                 .with("second", formatTo2Chars(date.getSeconds()))
-                .with("day", formatDay(date.getDay() + 1))
+                .with("day", formatDay(date))
                 .with("month", formatMonth(date.getMonth() + 1))
                 .apply();
     }
@@ -94,29 +94,11 @@ public class TimeFormat {
         return value < 10 ? "0" + value : String.valueOf(value);
     }
 
-    public void addFastFormats(PlaceholderContext context, long timeleftMs, Date rentedUntil) {
-        context.with("timeleft_concise", formatConsiseLeft(timeleftMs))
-                .with("timeleft_long", formatLongLeft(timeleftMs))
-                .with("rented_until_concise", formatDateShort(rentedUntil));
-    }
-
-    public void addFormats(PlaceholderContext context, long timeleftMs, Date rentedUntil) {
-        context.with("timeleft_concise", formatConsiseLeft(timeleftMs))
-                .with("timeleft_long", formatLongLeft(timeleftMs))
-                .with("rented_until_concise", formatDateShort(rentedUntil))
-                .with("rented_until_long", formatDateLong(rentedUntil));
-    }
-
-    public void addFormats(BukkitMessageDispatcher dispatcher, long timeleftMs, Date rentedUntil) {
-        dispatcher
-                .with("timeleft_concise", formatConsiseLeft(timeleftMs))
-                .with("timeleft_long", formatLongLeft(timeleftMs))
-                .with("rented_until_concise", formatDateShort(rentedUntil))
-                .with("rented_until_long", formatDateLong(rentedUntil));
-    }
-
-    public String formatDay(int dayInWeek) {
-        return config.getDateFormatLongDayNames().get(DayOfWeek.of(dayInWeek));
+    public String formatDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        return config.getDateFormatLongDayNames().get(DayOfWeek.of(dayOfWeek == Calendar.SUNDAY ? 7 : dayOfWeek - 1));
     }
 
     public String formatMonth(int monthInYear) {
