@@ -14,6 +14,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TaskUpdateCells extends BukkitRunnable {
 
@@ -22,6 +24,8 @@ public class TaskUpdateCells extends BukkitRunnable {
     private @Inject Plugin plugin;
     private @Inject PlayerSignDisallow disallow;
     private @Inject CellAPI api;
+
+    private final ExecutorService executor = Executors.newFixedThreadPool(4);
 
     private final Set<Integer> rentedCellIds = new HashSet<>();
 
@@ -43,7 +47,7 @@ public class TaskUpdateCells extends BukkitRunnable {
         }
         NearbyPlayerMap nearby = NearbyPlayerMap.from(disallow.filter(Bukkit.getOnlinePlayers()));
         for(Cell cell : stores.getCellStore().getCache().getAll()) {
-            updateSet(cell);
+            executor.submit(() -> updateSet(cell));
 
             if(cell.getSign() == null) {
                 continue;
@@ -52,16 +56,18 @@ public class TaskUpdateCells extends BukkitRunnable {
         }
     }
 
-    protected void updateSet(Cell cell) {
-        if(!cell.isRented() && rentedCellIds.contains(cell.getId())) {
+    protected void updateSet(Cell cached) {
+        if(!cached.isRented() && rentedCellIds.contains(cached.getId())) {
+            Cell cell = stores.getCellStore().get(cached.getId()).orElseThrow(() -> new IllegalStateException("Cell not found"));
+
             rentedCellIds.remove(cell.getId());
             api.expireCell(cell);
 
             Bukkit.getScheduler().runTaskAsynchronously(plugin, ()
                     -> stores.getCellStore().get(cell.getId()).ifPresent(utils::update));
         }
-        if(cell.isRented()) {
-            rentedCellIds.add(cell.getId());
+        if(cached.isRented()) {
+            rentedCellIds.add(cached.getId());
         }
 
     }
