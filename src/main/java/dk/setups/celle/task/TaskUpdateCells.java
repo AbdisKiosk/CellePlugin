@@ -60,15 +60,16 @@ public class TaskUpdateCells extends BukkitRunnable {
         if(!cached.isRented() && rentedCellIds.contains(cached.getId())) {
             Cell cell = stores.getCellStore().get(cached.getId()).orElseThrow(() -> new IllegalStateException("Cell not found"));
 
-            rentedCellIds.remove(cell.getId());
-            api.expireCell(cell);
+            if(!cell.isRented()) {
+                rentedCellIds.remove(cell.getId());
+                api.expireCell(cell);
 
-            Bukkit.getScheduler().runTaskAsynchronously(plugin, ()
-                    -> stores.getCellStore().get(cell.getId()).ifPresent(utils::update));
+                Bukkit.getScheduler().runTaskAsynchronously(plugin, ()
+                        -> stores.getCellStore().get(cell.getId()).ifPresent(utils::update));
+            }
         }
         if(cached.isRented()) {
             rentedCellIds.add(cached.getId());
         }
-
     }
 }

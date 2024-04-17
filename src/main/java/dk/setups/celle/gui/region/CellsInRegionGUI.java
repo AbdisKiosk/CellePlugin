@@ -32,7 +32,7 @@ import java.util.stream.IntStream;
 public class CellsInRegionGUI extends ConfigurableGUI<CellsInRegionGUIState> {
 
     @Getter
-    private String title = "Celler i {cell.group.price.format-long}";
+    private String title = "Celler i {region.name}";
     @Getter
     private int rows = 6;
     @Getter
@@ -46,7 +46,7 @@ public class CellsInRegionGUI extends ConfigurableGUI<CellsInRegionGUIState> {
     private List<Integer> cellItemSlots = IntStream.range(9, 45).boxed().collect(Collectors.toList());
     private ItemStack cellItem = ItemBuilder.from(Material.IRON_DOOR)
             .setName("§7{cell.name}")
-            .setLore(" §7§l» §7Pris: §a${cell.price.formatted-long}")
+            .setLore(" §7§l» §7Pris: §a${cell.group.price.format-long}")
             .build();
 
     private transient @Inject StoreManager store;
@@ -74,7 +74,7 @@ public class CellsInRegionGUI extends ConfigurableGUI<CellsInRegionGUIState> {
     }
 
     protected ItemStack createCellItem(Cell cell, GUIState state) {
-        return placeholderUtils.withPlaceholders(state, Collections.singletonMap("cell", cell), cellItem);
+        return placeholderUtils.withPlaceholders(state, Collections.singletonMap("cell", cell), cellItem.clone());
     }
 
     @Override

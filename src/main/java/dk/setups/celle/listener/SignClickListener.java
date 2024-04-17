@@ -8,6 +8,7 @@ import dk.setups.celle.gui.cell.CellAdminGUI;
 import dk.setups.celle.gui.cell.CellGUIState;
 import dk.setups.celle.gui.region.CellsInRegionGUI;
 import dk.setups.celle.gui.region.CellsInRegionGUIState;
+import dk.setups.celle.sign.AvailableCellsGUISign;
 import dk.setups.celle.util.WorldGuardUtils;
 import dk.setups.celle.util.cell.CellRentManager;
 import dk.setups.celle.util.CooldownUtil;
@@ -88,6 +89,11 @@ public class SignClickListener implements Listener {
             return;
         }
         if(!event.getPlayer().isOp()) {
+            return;
+        }
+        AvailableCellsGUISign sign = stores.getAvailableCellsGuiSignStore().getSign(block.getLocation()).orElse(null);
+        if(sign != null) {
+            event.setCancelled(true);
             return;
         }
         Cell cell = stores.getCellStore().getFromSignLoc(
