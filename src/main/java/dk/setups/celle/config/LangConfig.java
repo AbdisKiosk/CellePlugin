@@ -234,7 +234,8 @@ public class LangConfig extends LocaleConfig {
     private String commandCeaReloadAlias = "reload";
     private String commandCeaReloadDescription = "Genindlæser pluginnet.";
     private String commandCeaReloadUsage = "cea reload";
-    private String commandCeaReloadSuccess = "&aPluginnet er blevet genindlæst på &2{elapsed}ms&a.";
+    private String commandCeaReloadSuccess = "&aPluginnet er blevet genindlæst på &2{elapsed}ms&a." +
+            "\n&aIkke alle ændringer er blevet reloaded, så du bliver måske nødt til at genstarte serveren.";
 
     /**
      * Cell Click Events

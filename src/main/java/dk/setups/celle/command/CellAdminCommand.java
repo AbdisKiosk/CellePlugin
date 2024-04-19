@@ -6,6 +6,7 @@ import dk.setups.celle.cell.*;
 import dk.setups.celle.cell.log.CellLogFilter;
 import dk.setups.celle.cell.log.CellLogFilterBuilder;
 import dk.setups.celle.config.Config;
+import dk.setups.celle.config.DefaultConfig;
 import dk.setups.celle.config.LangConfig;
 import dk.setups.celle.database.StoreManager;
 import dk.setups.celle.gui.cell.logs.CellLogsGUI;
@@ -55,6 +56,8 @@ public class CellAdminCommand implements CommandService {
     private @Inject Plugin plugin;
     private @Inject CellUtils utils;
     private @Inject CellLogsGUI logsGUI;
+    private @Inject DefaultConfig defaults;
+
 
     @Executor(pattern = {"#{commandCeaCreateAutoAlias}"}, description = "${commandCeaCreateAutoDescription}", usage = "${commandCeaCreateAutoUsage}")
     public void createAuto(@Context Player executor, @Arg CellGroup group, @Arg String name) {
@@ -346,8 +349,8 @@ public class CellAdminCommand implements CommandService {
     public void reload(@Context CommandSender sender) {
         long started = System.currentTimeMillis();
 
-        Bukkit.getPluginManager().disablePlugin(plugin);
-        Bukkit.getPluginManager().enablePlugin(plugin);
+        config.load();
+        defaults.load();
 
         long elapsed = System.currentTimeMillis() - started;
         i18n.get(lang.getCommandCeaReloadSuccess())
