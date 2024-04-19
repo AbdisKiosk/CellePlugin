@@ -12,6 +12,7 @@ import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
 
@@ -23,6 +24,7 @@ public class CellUtils {
     private @Inject WorldGuardUtils worldGuard;
     private @Inject Config config;
     private @Inject PlayerSignDisallow disallow;
+    private @Inject JavaPlugin plugin;
 
     public void updateAndSave(Cell cell) {
         stores.getCellStore().persist(cell);
@@ -31,7 +33,9 @@ public class CellUtils {
 
     public void update(Cell cell) {
         try {
-            worldGuard.updateRegion(cell);
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                worldGuard.updateRegion(cell);
+            });
         } catch(Exception exception) {
             Bukkit.getLogger().warning("Failed to update region for cell: " + cell.getName());
             exception.printStackTrace();

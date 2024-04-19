@@ -64,8 +64,7 @@ public class TaskUpdateCells extends BukkitRunnable {
                 rentedCellIds.remove(cell.getId());
                 api.expireCell(cell);
 
-                Bukkit.getScheduler().runTaskAsynchronously(plugin, ()
-                        -> stores.getCellStore().get(cell.getId()).ifPresent(utils::update));
+                utils.update(cell);
             }
         }
         if(cached.isRented()) {
