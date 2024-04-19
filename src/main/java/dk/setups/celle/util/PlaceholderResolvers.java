@@ -82,6 +82,9 @@ public class PlaceholderResolvers {
         placeholders.registerPlaceholder(Date.class, "left-long", (c, __, ___) -> time.formatLongLeft(c));
         placeholders.registerPlaceholder(Date.class, "left-short", (c, __, ___) -> time.formatConsiseLeft(c));
 
+        placeholders.registerPlaceholder(String.class, "upper", (c, __, ___) -> c.toUpperCase());
+        placeholders.registerPlaceholder(String.class, "lower", (c, __, ___) -> c.toLowerCase());
+
         placeholders.registerPlaceholder(ProtectedRegion.class, "name", (c, __, ___) -> c.getId());
     }
 
