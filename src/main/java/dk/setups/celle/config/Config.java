@@ -137,4 +137,6 @@ public class Config extends OkaeriConfig {
             "Det er i millisekunder, så 1000 er 1 sekund."
     })
     private int cooldownMs = 250;
+
+    private boolean ironDoorOpen = true;
 }

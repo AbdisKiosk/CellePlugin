@@ -17,6 +17,8 @@ import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -140,5 +142,9 @@ public class WorldGuardUtils {
                 .getApplicableRegions(location)
                 .getRegions().stream()
                 .reduce((a, b) -> a.getPriority() > b.getPriority() ? a : b);
+    }
+
+    public boolean canBuild(Player player, Block block) {
+        return WorldGuardPlugin.inst().canBuild(player, block);
     }
 }
