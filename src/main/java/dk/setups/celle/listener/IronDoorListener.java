@@ -18,7 +18,7 @@ import org.bukkit.material.Openable;
 public class IronDoorListener implements Listener {
 
     private @Inject Config config;
-    private @Inject WorldGuardUtils utils;
+    private @Inject WorldGuardUtils worldGuard;
 
     @EventHandler
     public void onIronDoorOpen(PlayerInteractEvent event) {
@@ -35,9 +35,11 @@ public class IronDoorListener implements Listener {
             clicked = clicked.getRelative(0, -1, 0);
         }
 
+        if(!worldGuard.canBuild(event.getPlayer(), clicked)) {
+            return;
+        }
+
         setOpened(clicked.getState());
-
-
     }
 
     private boolean setOpened(BlockState state) {
