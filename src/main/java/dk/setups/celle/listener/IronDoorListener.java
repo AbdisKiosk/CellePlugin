@@ -30,6 +30,9 @@ public class IronDoorListener implements Listener {
         if(!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             return;
         }
+        if(!isValidDoor(clicked)) {
+            return;
+        }
 
         if(isUpperHalf(clicked)) {
             clicked = clicked.getRelative(0, -1, 0);
