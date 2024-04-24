@@ -38,7 +38,7 @@ public class IronDoorListener implements Listener {
         if(!worldGuard.canBuild(event.getPlayer(), clicked)) {
             return;
         }
-        if(!(clicked instanceof Openable)) {
+        if(!(clicked.getState().getData()instanceof Openable)) {
             return;
         }
 
