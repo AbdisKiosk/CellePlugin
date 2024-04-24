@@ -35,10 +35,10 @@ public class IronDoorListener implements Listener {
             clicked = clicked.getRelative(0, -1, 0);
         }
 
-        if(!isValidDoor(clicked)) {
+        if(!worldGuard.canBuild(event.getPlayer(), clicked)) {
             return;
         }
-        if(!worldGuard.canBuild(event.getPlayer(), clicked)) {
+        if(!(clicked instanceof Openable)) {
             return;
         }
 
