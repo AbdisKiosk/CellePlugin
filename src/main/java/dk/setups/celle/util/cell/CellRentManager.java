@@ -78,7 +78,7 @@ public class CellRentManager {
                         return;
                     }
                     i18n.get(lang.getCellAttemptRentSuccess()).with("cell", cell).sendTo(player);
-                    utils.update(cell);
+                    utils.update(cell); //todo: fetch new cell
                 }).execute();
     }
 
