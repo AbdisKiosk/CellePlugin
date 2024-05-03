@@ -23,6 +23,7 @@ public class CellRentManager {
     private @Inject CellUtils utils;
     private @Inject CellAPI api;
     private @Inject VaultUtils vault;
+    private @Inject StoreManager store;
 
 
     public void handleCellUse(Player player, Cell cell) {
@@ -78,7 +79,7 @@ public class CellRentManager {
                         return;
                     }
                     i18n.get(lang.getCellAttemptRentSuccess()).with("cell", cell).sendTo(player);
-                    utils.update(cell); //todo: fetch new cell
+                    utils.update(store.getCellStore().get(cell.getId()).orElse(cell));
                 }).execute();
     }
 

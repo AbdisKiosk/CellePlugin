@@ -122,8 +122,6 @@ task combinedJar(type: com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJa
     from sourceSets.main.output
     configurations = [project.configurations.runtimeClasspath]
     archiveClassifier.set('combined')
-
-    destinationDirectory = file('C:\\Users\\oscar\\Documents\\mintest\\plugins')
 }
 
 build.dependsOn /*myCodeJar, dependenciesJar,*/ combinedJar
