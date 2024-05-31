@@ -38,11 +38,18 @@ public class IronDoorListener implements Listener {
         if(!worldGuard.canBuild(event.getPlayer(), clicked)) {
             return;
         }
-        if(!(clicked.getState().getData()instanceof Openable)) {
+        if(!(clicked.getState().getData() instanceof Openable)) {
+            return;
+        }
+        if(!isIronDoor(clicked)) {
             return;
         }
 
         setOpened(clicked.getState());
+    }
+
+    private boolean isIronDoor(Block block) {
+        return block.getType().equals(Material.IRON_DOOR) || block.getType().equals(Material.IRON_DOOR_BLOCK);
     }
 
     private boolean setOpened(BlockState state) {
