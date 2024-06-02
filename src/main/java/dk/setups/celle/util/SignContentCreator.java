@@ -29,10 +29,11 @@ public class SignContentCreator {
             if(cell.isOwner(target.getUniqueId())) {
                 content = getOwnerContent(cell, target);
             }
-            if(cell.isPermitted(target)) {
+            else if(cell.isPermitted(target)) {
                 content = getMemberContent(cell, target);
+            } else {
+                content = getNonMemberContent(cell, target);
             }
-            content = getNonMemberContent(cell, target);
         } else {
             content = getUnrentedContent(cell, target);
         }
