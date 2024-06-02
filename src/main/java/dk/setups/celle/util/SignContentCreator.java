@@ -23,16 +23,29 @@ public class SignContentCreator {
     private @Inject Placeholders placeholders;
 
     public String[] getSignContent(Cell cell, Player target) {
+        String[] content;
+
         if(cell.isRented()) {
             if(cell.isOwner(target.getUniqueId())) {
-                return getOwnerContent(cell, target);
+                content = getOwnerContent(cell, target);
             }
             if(cell.isPermitted(target)) {
-                return getMemberContent(cell, target);
+                content = getMemberContent(cell, target);
             }
-            return getNonMemberContent(cell, target);
+            content = getNonMemberContent(cell, target);
+        } else {
+            content = getUnrentedContent(cell, target);
         }
-        return getUnrentedContent(cell, target);
+        return limitLength(content);
+    }
+
+    private String[] limitLength(String[] lines) {
+        for (int i = 0; i < lines.length; i++) {
+            if (lines[i].length() > 15) {
+                lines[i] = lines[i].substring(0, 15);
+            }
+        }
+        return lines;
     }
 
     private String[] getOwnerContent(Cell cell, Player target) {
