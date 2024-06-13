@@ -138,6 +138,11 @@ public class LangConfig extends LocaleConfig {
     private String commandCeaUnrentUsage = "cea unrent <navn>";
     private String commandCeaUnrentSuccess = "§aCellen &2{cell.name} &aer blevet unrentet.";
 
+    private String commandCeaUnrentAllAlias = "unrent all *";
+    private String commandCeaUnrentAllDescription = "Unrenter alle spillernes celler";
+    private String commandCeaUnrentAllUsage = "cea unrent all <spiller>";
+    private String commandCeaUnrentAllSuccess = "§aAlle celler for spilleren &2{player} &aer blevet unrentet.";
+
     private String commandCeaExtendCellAlias = "extend cell *";
     private String commandCeaExtendCellDescription = "Forlænger lejen af en celle.";
     private String commandCeaExtendCellUsage = "cea extend cell <navn>";

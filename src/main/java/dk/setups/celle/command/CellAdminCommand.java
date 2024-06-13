@@ -36,6 +36,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.time.Duration;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -159,6 +160,21 @@ public class CellAdminCommand implements CommandService {
         cell.unrent();
         utils.updateAndSave(cell);
         i18n.get(lang.getCommandCeaUnrentSuccess()).with("cell", cell).sendTo(sender);
+    }
+
+    @Executor(pattern = "#{commandCeaUnrentAllAlias}", description = "${commandCeaUnrentAllDescription}", usage = "${commandCeaUnrentAllUsage}")
+    @Async
+    public void unrentAllCells(@Context CommandSender sender, @Arg CellUser user) {
+        Collection<Cell> cells = stores.getCellStore().getOwnedCells(user);
+        for(Cell cell : cells) {
+            cell.unrent();
+            utils.updateAndSave(cell);
+        }
+
+        i18n.get(lang.getCommandCeaUnrentAllSuccess())
+                .with("count", cells.size())
+                .with("player", user.getName())
+                .sendTo(sender);
     }
 
     @Executor(pattern = "#{commandCeaExtendCellAlias}", description = "${commandCeaExtendCellDescription}", usage = "${commandCeaExtendCellUsage}")
