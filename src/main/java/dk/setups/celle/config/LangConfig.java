@@ -117,6 +117,13 @@ public class LangConfig extends LocaleConfig {
     private String commandCeaCellSetSignNotLookingAtSign = "&cDu skal kigge på et skilt.";
     private String commandCeaCellSetSignSuccess = "&aSatte skiltet for &2{cell.name}&a.";
 
+    private String commandCeaCellDeleteSignAlias = "cell delete sign";
+    private String commandCeaCellDeleteSignDescription = "Sletter det skilte, som du kigger på";
+    private String commandCeaCellDeleteSignUsage = "cea cell delete sign";
+    private String commandCeaCellDeleteSignNotLookingAtSign = "&cDu skal kigge på et skilt.";
+    private String commandCeaCellDeleteSignSuccess = "&aFjernede skiltet.";
+    private String commandCeaCellDeleteSignFailure = "§cDer er ikke et skilt på denne lokation.";
+
     private String commandCeaCellSetTeleportAlias = "cell set teleport *";
     private String commandCeaCellSetTeleportDescription = "Sætter cellens teleporterings-lokationen til den placering";
     private String commandCeaCellSetTeleportUsage = "cea set teleport <celle>";

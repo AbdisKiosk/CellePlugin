@@ -130,6 +130,24 @@ public class CellAdminCommand implements CommandService {
         i18n.get(lang.getCommandCeaCellSetSignSuccess()).with("cell", cell).sendTo(player);
     }
 
+    @Executor(pattern = "#{commandCeaCellDeleteSignAlias}", description = "${commandCeaCellDeleteSignDescription}", usage = "${commandCeaCellDeleteSignUsage}")
+    @Async
+    public void deleteSign(@Context Player player) {
+        Block lookingAt = player.getTargetBlock((Set<Material>) null, 5);
+        if(lookingAt == null || !lookingAt.getType().equals(Material.WALL_SIGN)) {
+            i18n.get(lang.getCommandCeaCellDeleteSignNotLookingAtSign()).sendTo(player);
+            return;
+        }
+
+        if(stores.getSignStore().delete(lookingAt.getX(), lookingAt.getY(), lookingAt.getZ(),
+                lookingAt.getWorld().getName())) {
+            i18n.get(lang.getCommandCeaCellDeleteSignSuccess()).sendTo(player);
+            return;
+        }
+        i18n.get(lang.getCommandCeaCellDeleteSignFailure()).sendTo(player);
+    }
+
+
 
     @Executor(pattern = "#{commandCeaCreateGroupAlias}", description = "${commandCeaCreateGroupDescription}", usage = "${commandCeaCreateGroupUsage}")
     @Async

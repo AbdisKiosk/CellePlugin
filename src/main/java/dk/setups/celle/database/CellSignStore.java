@@ -11,4 +11,30 @@ public class CellSignStore extends BaseStore<Integer, CellSign> {
         super(dao, stores, logger);
     }
 
+    public boolean delete(int x, int y, int z, String world) {
+        try {
+            CellSign sign = getDao().queryBuilder()
+                    .where()
+                    .eq("x", x)
+                    .and()
+                    .eq("y", y)
+                    .and()
+                    .eq("z", z)
+                    .and()
+                    .eq("world", world)
+                    .queryForFirst();
+
+            if(sign == null) {
+                return false;
+            }
+
+            getDao().delete(sign);
+        } catch (Exception exception) {
+            getLogger().severe("Failed to delete sign at " + x + ", " + y + ", " + z + " in world " + world);
+            return false;
+        }
+
+        return true;
+    }
+
 }
