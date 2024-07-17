@@ -11,6 +11,8 @@ import dk.setups.celle.util.WorldGuardUtils;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -47,6 +49,7 @@ public class CellUtils {
         updateSign(NearbyPlayerMap.from(disallow.filter(Bukkit.getOnlinePlayers())), cell);
     }
 
+    @SuppressWarnings("deprecation")
     public void updateSign(NearbyPlayerMap nearby, Cell cell) {
         if(cell.getSign() == null) {
             return;
@@ -57,7 +60,10 @@ public class CellUtils {
             if(timeSinceLastJoin < SECOND * 5) {
                 continue;
             }
-            player.sendSignChange(cell.getSign().getLocation(), content.getSignContent(cell, player));
+            Location sign = cell.getSign().getLocation();
+
+            player.sendBlockChange(sign, Material.WALL_SIGN, sign.getBlock().getData());
+            player.sendSignChange(sign, content.getSignContent(cell, player));
         }
     }
 
