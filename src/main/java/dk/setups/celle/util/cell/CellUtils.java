@@ -58,7 +58,7 @@ public class CellUtils {
         for(Player player : nearby.getNearbyPlayers(cell.getSign().getLocation())) {
             long timeSinceLastJoin = System.currentTimeMillis() - player.getLastPlayed();
             if(timeSinceLastJoin < SECOND * 5) {
-                continue;
+                continue;                                                                   
             }
             Location sign = cell.getSign().getLocation();
 

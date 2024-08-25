@@ -99,6 +99,9 @@ public class WorldGuardUtils {
         DefaultDomain members = new DefaultDomain();
         DefaultDomain owners = new DefaultDomain();
 
+        members.clear();
+        owners.clear();
+
         if(cell.isRented()) {
             cell.getMembers().forEach(member -> owners.addPlayer(member.getUser().getUuid()));
             owners.addPlayer(cell.getOwner().getUuid());
