@@ -62,7 +62,7 @@ public class CellCommand implements CommandService {
     @Permission("cell.command.member.add")
     @Completion(arg = "cell", value = "@cells:owned") @Completion(arg = "target", value = "@bukkit:player:name")
     @Executor(pattern = {"#{commandCellMemberAddAlias}"}, description = "${commandCellMemberAddDescription}", usage = "${commandCellMemberAddUsage}")
-    public void addMember(@Context Player sender, @Arg CellUser target, @Arg("cell") Option<Cell> cellOption) {
+    public void addMember(@Context Player sender, @Arg Player target, @Arg("cell") Option<Cell> cellOption) {
         Cell cell = cellOption.orElseGet(() -> getCellInRegion(sender).orElse(null));
         if(cell == null) {
             sender.sendMessage("§cDu skal skrive en celle");
@@ -70,6 +70,14 @@ public class CellCommand implements CommandService {
         }
         if(!sender.hasPermission("cell.command.member.add.other") && !cell.isOwner(stores.getUserStore().get(sender))) {
             i18n.get(lang.getCommandCellMemberAddNotOwner()).with("cell", cell).sendTo(sender);
+            return;
+        }
+
+        if(!target.hasPermission(cell.getGroup().getMemberPermission())) {
+            i18n.get(lang.getCommandCellMemberAddCannotBeMember())
+                    .with("target", target)
+                    .with("cell", cell)
+                    .sendTo(sender);
             return;
         }
 

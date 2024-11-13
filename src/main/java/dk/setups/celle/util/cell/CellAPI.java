@@ -12,11 +12,13 @@ import dk.setups.celle.event.rent.CellRentEvent;
 import dk.setups.celle.event.rent.CellUnrentEvent;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class CellAPI {
@@ -53,6 +55,10 @@ public class CellAPI {
         cell.unrent();
         utils.updateAndSave(cell);
         return EventSuccess.SUCCESS;
+    }
+
+    public EventSuccess addMember(Cell cell, CellUser user, OfflinePlayer target) {
+        return addMember(cell, user, stores.getUserStore().get(target));
     }
 
     public EventSuccess addMember(Cell cell, CellUser user, CellUser target) {

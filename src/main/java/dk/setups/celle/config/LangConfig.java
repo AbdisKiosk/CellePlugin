@@ -42,6 +42,7 @@ public class LangConfig extends LocaleConfig {
     private String commandCellMemberAddSuccess = "&aSpilleren &2{target} &aer blevet tilføjet til cellen &2{cell.name}&a.";
     private String commandCellMemberAddAlreadyMember = "&4{target} &aer allerede medlem af &2{cell.name}&a.";
     private String commandCellMemberAddNotOwner = "&cDu ejer ikke &4{cell.name}&c.";
+    private String commandCellMemberAddCannotBeMember = "&cSpilleren §4{target} &cmå ikke være medlem af cellen &4{cell.name}&c.";
 
     private String commandCellMemberRemoveAlias = "remove * ?";
     private String commandCellMemberRemoveDescription = "Fjerner en spiller fra en celle.";

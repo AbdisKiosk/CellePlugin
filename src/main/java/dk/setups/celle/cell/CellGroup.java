@@ -75,6 +75,10 @@ public class CellGroup {
         return "cell.rent." + getName();
     }
 
+    public String getMemberPermission() {
+        return "cell.member." + getName();
+    }
+
     public Long getRentTimeMillis() {
         return Optional.ofNullable(this.rentTimeMillis).orElse(getDefaults().getCellRentMillis());
     }
