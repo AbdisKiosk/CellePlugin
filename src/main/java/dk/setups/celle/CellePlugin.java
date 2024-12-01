@@ -104,7 +104,7 @@ public class CellePlugin extends OkaeriBukkitPlugin {
 
     @Planned(ExecutionPhase.POST_SETUP)
     public void updateRegions(WorldGuardUtils utils, StoreManager stores, Logger logger) {
-        for(Cell cell : stores.getCellStore().getCache().getAll()) {
+        for(Cell cell : stores.getCellStore().getAll()) {
             try {
                 utils.updateRegion(cell);
             } catch(Exception ex) {

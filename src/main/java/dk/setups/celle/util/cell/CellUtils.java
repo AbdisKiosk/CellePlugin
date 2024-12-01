@@ -61,9 +61,11 @@ public class CellUtils {
                 continue;                                                                   
             }
             Location sign = cell.getSign().getLocation();
-
             player.sendBlockChange(sign, Material.WALL_SIGN, sign.getBlock().getData());
-            player.sendSignChange(sign, content.getSignContent(cell, player));
+
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                player.sendSignChange(sign, content.getSignContent(cell, player));
+            }, 1);
         }
     }
 
