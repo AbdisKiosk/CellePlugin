@@ -39,7 +39,7 @@ public class JoinListener implements Listener {
         if(user == null) {
             return;
         }
-
+/*
         for(Cell addedCell : stores.getMemberStore().getAllowedCells(user)) {
             String memberPermission = addedCell.getGroup().getMemberPermission();
             if(player.hasPermission(memberPermission)) {
@@ -47,5 +47,5 @@ public class JoinListener implements Listener {
                 utils.updateAndSave(addedCell);
             }
         }
-    }
+  */  }
 }

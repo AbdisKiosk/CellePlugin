@@ -73,13 +73,13 @@ public class CellCommand implements CommandService {
             return;
         }
 
-        if(!target.hasPermission(cell.getGroup().getMemberPermission())) {
+        /*if(!target.hasPermission(cell.getGroup().getMemberPermission())) {
             i18n.get(lang.getCommandCellMemberAddCannotBeMember())
                     .with("target", target)
                     .with("cell", cell)
                     .sendTo(sender);
             return;
-        }
+        }*/
 
         if(cell.isPermitted(target)) {
             i18n.get(lang.getCommandCellMemberAddAlreadyMember())
