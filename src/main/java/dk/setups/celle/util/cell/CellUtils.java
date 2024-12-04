@@ -65,7 +65,7 @@ public class CellUtils {
 
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 player.sendSignChange(sign, content.getSignContent(cell, player));
-            }, 1);
+            }, 5);
         }
     }
 
