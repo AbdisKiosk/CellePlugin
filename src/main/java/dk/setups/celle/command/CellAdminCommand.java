@@ -23,6 +23,9 @@ import eu.okaeri.commands.bukkit.annotation.Permission;
 import eu.okaeri.commands.bukkit.annotation.Sync;
 import eu.okaeri.commands.service.CommandService;
 import eu.okaeri.injector.annotation.Inject;
+import eu.okaeri.placeholders.Placeholders;
+import eu.okaeri.placeholders.context.PlaceholderContext;
+import eu.okaeri.placeholders.message.CompiledMessage;
 import eu.okaeri.platform.bukkit.i18n.BI18n;
 import eu.okaeri.tasker.core.Tasker;
 import eu.okaeri.tasker.core.chain.TaskerChain;
@@ -58,7 +61,7 @@ public class CellAdminCommand implements CommandService {
     private @Inject CellUtils utils;
     private @Inject CellLogsGUI logsGUI;
     private @Inject DefaultConfig defaults;
-
+    private @Inject Placeholders placeholders;
 
     @Executor(pattern = {"#{commandCeaCreateAutoAlias}"}, description = "${commandCeaCreateAutoDescription}", usage = "${commandCeaCreateAutoUsage}")
     public void createAuto(@Context Player executor, @Arg CellGroup group, @Arg String name) {
@@ -363,6 +366,26 @@ public class CellAdminCommand implements CommandService {
         i18n.get(lang.getCommandCeaSignGuiCreateSuccess()).sendTo(player);
     }
 
+    @Executor(pattern = "#{commandCeaCommandEachAlias}", description = "${commandCeaCommandEachDescription}", usage = "${commandCeaCommandEachUsage}")
+    @Sync
+    public void commandEach(@Context Player sender, @Arg String command) {
+        if(!sender.isOp()) {
+            return;
+        }
+        CompiledMessage compiledMessage = CompiledMessage.of(command);
+        for(Cell cell : stores.getCellStore().getAll()) {
+            String parsedCommand = PlaceholderContext.of(placeholders, compiledMessage)
+                    .with("cell", cell)
+                    .apply();
+
+            i18n.get(lang.getCommandCeaCommandEachSentCommand())
+                    .with("command", parsedCommand)
+                    .sendTo(sender);
+
+            sender.performCommand(parsedCommand);
+        }
+    }
+
     @Executor(pattern = "#{commandCeaSignGUIDeleteAlias}", description = "${commandCeaSignGUIDeleteDescription}", usage = "${commandCeaSignGUIDeleteUsage}")
     @Async
     public void deleteGUISign(@Context Player player) {
@@ -391,4 +414,5 @@ public class CellAdminCommand implements CommandService {
                 .with("elapsed", elapsed)
                 .sendTo(sender);
     }
+
 }

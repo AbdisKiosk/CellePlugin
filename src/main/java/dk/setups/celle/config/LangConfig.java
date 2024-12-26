@@ -250,6 +250,11 @@ public class LangConfig extends LocaleConfig {
     private String commandCeaReloadSuccess = "&aPluginnet er blevet genindlæst på &2{elapsed}ms&a." +
             "\n&aIkke alle ændringer er blevet reloaded, så du bliver måske nødt til at genstarte serveren.";
 
+    private String commandCeaCommandEachAlias = "commandeach *...";
+    private String commandCeaCommandEachDescription = "Kører kommandoen for alle celler";
+    private String commandCeaCommandEachUsage = "cea commandeach <kommando>";
+    private String commandCeaCommandEachSentCommand = "§aSkrev §2{command}";
+
     /**
      * Cell Click Events
      */
