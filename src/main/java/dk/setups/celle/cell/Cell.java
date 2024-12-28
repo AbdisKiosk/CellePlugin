@@ -106,6 +106,11 @@ public class Cell {
         clearMembers();
     }
 
+    public String getRentPermission() {
+        return "cell.rent." + getGroup().getName() + "." + getName();
+    }
+
+
     public boolean isOwner(CellUser user) {
         return isOwner(user.getUuid());
     }

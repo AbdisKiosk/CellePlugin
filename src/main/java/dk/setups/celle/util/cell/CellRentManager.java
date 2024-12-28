@@ -44,7 +44,8 @@ public class CellRentManager {
                     return true;
                 })
                 .abortIfSyncNot(() -> {
-                    if(!player.hasPermission(cell.getGroup().getRentPermission())) {
+                    if(!player.hasPermission(cell.getGroup().getRentPermission())
+                        && !player.hasPermission(cell.getRentPermission())) {
                         i18n.get(lang.getCellAttemptRentNoPermission()).with("cell", cell).sendTo(player);
                         return false;
                     }
@@ -89,7 +90,7 @@ public class CellRentManager {
                      if(cell.getOwner().getUuid().equals(player.getUniqueId()) && cell.isRented()) {
                          return true;
                      }
-                    i18n.get(lang.getCellAttemptExtendNotOwned()).with("cell", cell).sendTo(player);
+                     i18n.get(lang.getCellAttemptExtendNotOwned()).with("cell", cell).sendTo(player);
                      return false;
                 })
                 .abortIfAsyncNot(() -> {
