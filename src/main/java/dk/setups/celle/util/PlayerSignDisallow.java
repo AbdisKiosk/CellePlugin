@@ -23,7 +23,7 @@ public class PlayerSignDisallow {
 
     public void disallow(UUID player) {
         long time = System.currentTimeMillis();
-        long THREE_SECONDS = 3000;
-        this.disallowed.put(player, time + THREE_SECONDS);
+        long FIVE_SECONDS = 5000;
+        this.disallowed.put(player, time + FIVE_SECONDS);
     }
 }
