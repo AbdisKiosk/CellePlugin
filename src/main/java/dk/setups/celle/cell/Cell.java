@@ -110,7 +110,6 @@ public class Cell {
         return "cell.rent." + getGroup().getName() + "." + getName();
     }
 
-
     public boolean isOwner(CellUser user) {
         return isOwner(user.getUuid());
     }

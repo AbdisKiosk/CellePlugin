@@ -276,6 +276,7 @@ public class LangConfig extends LocaleConfig {
     private String cellAttemptRentSuccess = "&aDu har nu lejet cellen &2{cell.name}&a.";
 
     private String cellAttemptExtendNotOwned = "&cDu ejer ikke cellen &4{cell.name}&c.";
+    private String cellAttemptExtendNoPermission = "§cDu har ikke adgang til at forlænge §4{cell.name}§c.";
     private String cellAttemptExtendFullyExtended = "&cDu kan ikke forlænge lejen af &4{cell.name} &cmere.";
     private String cellAttemptExtendNotEnoughMoney = "&cDu har ikke nok penge til at forlænge lejen af &4{cell.name}&c.";
     private String cellAttemptExtendSuccess = "&aDu har nu forlænget lejen af &2{cell.name}&a.";

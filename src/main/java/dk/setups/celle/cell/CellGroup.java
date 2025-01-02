@@ -75,6 +75,10 @@ public class CellGroup {
         return "cell.rent." + getName();
     }
 
+    public String getExtendPermission() {
+        return "cell.extend." + getName();
+    }
+
     public String getMemberPermission() {
         return "cell.member." + getName();
     }

@@ -93,6 +93,15 @@ public class CellRentManager {
                      i18n.get(lang.getCellAttemptExtendNotOwned()).with("cell", cell).sendTo(player);
                      return false;
                 })
+                .abortIfSyncNot(() -> {
+                    if(player.hasPermission(cell.getGroup().getRentPermission())
+                        || player.hasPermission(cell.getRentPermission())
+                        || player.hasPermission(cell.getGroup().getExtendPermission())) {
+                        return true;
+                    }
+                    i18n.get(lang.getCellAttemptExtendNoPermission()).with("cell", cell).sendTo(player);
+                    return false;
+                })
                 .abortIfAsyncNot(() -> {
                     if(!cell.canExtend()) {
                         i18n.get(lang.getCellAttemptExtendFullyExtended()).with("cell", cell).sendTo(player);
