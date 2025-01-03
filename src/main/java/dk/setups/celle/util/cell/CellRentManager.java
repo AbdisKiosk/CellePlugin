@@ -60,7 +60,7 @@ public class CellRentManager {
                 })
                 .abortIfSyncNot(() -> {
                     if(!vault.tryTakeMoney(player, cell.getGroup().getRentPrice())) {
-                        i18n.get(lang.getCellAttemptRentNotEnoughMoney()).with("group", cell).sendTo(player);
+                        i18n.get(lang.getCellAttemptRentNotEnoughMoney()).with("cell", cell).sendTo(player);
                         return false;
                     }
                     return true;
