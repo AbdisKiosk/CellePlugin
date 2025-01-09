@@ -191,6 +191,11 @@ public class CellAdminCommand implements CommandService {
             cell.unrent();
             utils.updateAndSave(cell);
         }
+        Collection<Cell> permittedCells = stores.getCellStore().getPermittedCells(user);
+        for(Cell cell : permittedCells) {
+            cell.removeMember(user);
+            utils.updateAndSave(cell);
+        }
 
         i18n.get(lang.getCommandCeaUnrentAllSuccess())
                 .with("count", cells.size())
