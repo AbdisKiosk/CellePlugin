@@ -9,6 +9,7 @@ import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.bukkit.i18n.BI18n;
 import eu.okaeri.platform.core.annotation.Component;
 import eu.okaeri.tasker.core.Tasker;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Date;

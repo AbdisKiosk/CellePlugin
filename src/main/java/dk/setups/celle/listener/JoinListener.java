@@ -29,23 +29,6 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         disallow.disallow(event.getPlayer().getUniqueId());
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () ->  {
-            removeAsMemberFromNonPermittedCells(event.getPlayer());
-        });
     }
 
-    public void removeAsMemberFromNonPermittedCells(@NotNull Player player) {
-        CellUser user = stores.getUserStore().get(player);
-        if(user == null) {
-            return;
-        }
-/*
-        for(Cell addedCell : stores.getMemberStore().getAllowedCells(user)) {
-            String memberPermission = addedCell.getGroup().getMemberPermission();
-            if(player.hasPermission(memberPermission)) {
-                addedCell.removeMember(user);
-                utils.updateAndSave(addedCell);
-            }
-        }
-  */  }
 }
