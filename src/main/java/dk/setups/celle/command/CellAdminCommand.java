@@ -2,12 +2,14 @@ package dk.setups.celle.command;
 
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import dk.setups.celle.CellePlugin;
 import dk.setups.celle.cell.*;
 import dk.setups.celle.cell.log.CellLogFilter;
 import dk.setups.celle.cell.log.CellLogFilterBuilder;
 import dk.setups.celle.config.Config;
 import dk.setups.celle.config.DefaultConfig;
 import dk.setups.celle.config.LangConfig;
+import dk.setups.celle.database.CellTeleportStore;
 import dk.setups.celle.database.StoreManager;
 import dk.setups.celle.gui.cell.logs.CellLogsGUI;
 import dk.setups.celle.gui.cell.logs.CellLogsGUIState;
@@ -82,6 +84,10 @@ public class CellAdminCommand implements CommandService {
             createCell(executor, group, worldGuard.create(name, selection.get()), name)
                     .acceptAsync(cell -> {
                         cell.setSign(new CellSign(target.getLocation()));
+                        Location loc = executor.getLocation();
+                        cell.setTeleport(new CellTeleport(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(),
+                                loc.getYaw(), loc.getPitch(), loc.getWorld().getName()));
+                        stores.getTeleportStore().persist(cell.getTeleport());
                         stores.getSignStore().persist(cell.getSign());
                         utils.updateAndSave(cell);
                     })
