@@ -114,6 +114,8 @@ public class WorldGuardUtils {
         region.setOwners(owners);
 
         region.getFlags().clear();
+
+        region.setPriority(5);
     }
 
     private void updateFlags(ProtectedRegion region) {
