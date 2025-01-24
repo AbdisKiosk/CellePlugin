@@ -2,6 +2,7 @@ package dk.setups.celle.util;
 
 import eu.okaeri.platform.core.annotation.Component;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ public class PlayerSignDisallow {
     public Collection<? extends Player> filter(Collection<? extends Player> players) {
         long time = System.currentTimeMillis();
         players = new HashSet<>(players);
-        players.removeIf(player -> this.disallowed.getOrDefault(player.getUniqueId(), 0L) > time);
+        players.removeIf(player -> isDisallowed(player.getUniqueId()));
         return players;
     }
 
@@ -25,5 +26,11 @@ public class PlayerSignDisallow {
         long time = System.currentTimeMillis();
         long FIVE_SECONDS = 5000;
         this.disallowed.put(player, time + FIVE_SECONDS);
+    }
+
+    public boolean isDisallowed(@NotNull UUID player) {
+        long time = System.currentTimeMillis();
+
+        return disallowed.getOrDefault(player, 0L) > time;
     }
 }

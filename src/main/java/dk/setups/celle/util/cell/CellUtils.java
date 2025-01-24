@@ -64,6 +64,9 @@ public class CellUtils {
             player.sendBlockChange(sign, Material.WALL_SIGN, sign.getBlock().getData());
 
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                if(disallow.isDisallowed(player.getUniqueId())) {
+                    return;
+                }
                 player.sendSignChange(sign, content.getSignContent(cell, player));
             }, 15);
         }
