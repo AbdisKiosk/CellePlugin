@@ -139,4 +139,5 @@ public class Config extends OkaeriConfig {
     private int cooldownMs = 250;
 
     private boolean ironDoorOpen = true;
+    private boolean teleportOutOfCell = true;
 }
