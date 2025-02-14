@@ -1,6 +1,7 @@
 package dk.setups.celle;
 
 import dev.triumphteam.gui.guis.Gui;
+import dk.setups.celle.api.PlaceholderAPIExpansion;
 import dk.setups.celle.cell.*;
 import dk.setups.celle.command.completions.CellCompletion;
 import dk.setups.celle.command.completions.CellGroupCompletion;
@@ -12,6 +13,8 @@ import dk.setups.celle.command.types.GroupTypeResolver;
 import dk.setups.celle.command.types.ProtectedRegionResolver;
 import dk.setups.celle.config.Config;
 import dk.setups.celle.config.LangConfig;
+import dk.setups.celle.database.CellGroupStore;
+import dk.setups.celle.database.CellStore;
 import dk.setups.celle.database.StoreManager;
 import dk.setups.celle.gui.cell.CellAdminGUI;
 import dk.setups.celle.gui.cell.logs.CellLogsGUI;
@@ -111,6 +114,13 @@ public class CellePlugin extends OkaeriBukkitPlugin {
                 logger.log(Level.FINE, "Failed to update for cell: " + cell.getName(), ex);
             }
         }
+    }
+
+    @Planned(ExecutionPhase.POST_SETUP)
+    public void registerPlaceholders(StoreManager storeManager) {
+        PlaceholderAPIExpansion placeholderAPIExpansion =
+                new PlaceholderAPIExpansion(storeManager.getGroupStore(), storeManager.getCellStore());
+        placeholderAPIExpansion.register();
     }
 
     private PlaceholderResolvers resolvers;

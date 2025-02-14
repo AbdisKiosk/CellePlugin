@@ -3,7 +3,7 @@ main: dk.setups.celle.CellePlugin
 author: AbdisKiosk
 version: 1.1.1
 website: https://www.setups.dk
-depend: [WorldGuard, WorldEdit, Vault]
+depend: [WorldGuard, WorldEdit, Vault, PlaceholderAPI]
 permissions:
   cell.command.unrent:
     description: Giver dig adgang til at opsige din celle
