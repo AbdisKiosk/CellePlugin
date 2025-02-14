@@ -10,14 +10,18 @@ import dk.setups.celle.event.rent.CellExpireEvent;
 import dk.setups.celle.event.rent.CellExtendEvent;
 import dk.setups.celle.event.rent.CellRentEvent;
 import dk.setups.celle.event.rent.CellUnrentEvent;
+import dk.setups.celle.util.WorldGuardUtils;
 import eu.okaeri.injector.annotation.Inject;
 import eu.okaeri.platform.core.annotation.Component;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -26,6 +30,7 @@ public class CellAPI {
     private @Inject CellUtils utils;
     private @Inject StoreManager stores;
     private @Inject PluginManager pluginManager;
+    private @Inject WorldGuardUtils worldGuard;
 
     public EventSuccess extendCell(Cell cell, CellUser user) {
         if (this.callEvent(new CellExtendEvent(cell, user))) {
@@ -83,6 +88,11 @@ public class CellAPI {
         callEvent(new CellExpireEvent(cell));
         cell.unrent();
         utils.updateAndSave(cell);
+    }
+
+    public Optional<Cell> getCellAtLocation(Location location) {
+        return worldGuard.getHighestPriority(location)
+                .flatMap(region -> stores.getCellStore().getFromRegion(region.getId(), location.getWorld().getName()));
     }
 
     private boolean callEvent(Event event) {

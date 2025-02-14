@@ -41,7 +41,7 @@ public class CellCommand implements CommandService {
     @Completion(arg = "cell", value = "@cells:owned")
     @Executor(pattern = {"#{commandCellUnrentAlias}"}, description = "${commandCellUnrentDescription}", usage = "${commandCellUnrentUsage}")
     public void unrent(@Context Player player, @Arg("cell") Option<Cell> cellOption) {
-        Cell cell = cellOption.orElseGet(() -> getCellInRegion(player).orElse(null));
+        Cell cell = cellOption.orElseGet(() -> api.getCellAtLocation(player.getLocation()).orElse(null));
         if(cell == null) {
             player.sendMessage("§cDu skal skrive en celle");
             return;
@@ -63,7 +63,7 @@ public class CellCommand implements CommandService {
     @Completion(arg = "cell", value = "@cells:owned") @Completion(arg = "target", value = "@bukkit:player:name")
     @Executor(pattern = {"#{commandCellMemberAddAlias}"}, description = "${commandCellMemberAddDescription}", usage = "${commandCellMemberAddUsage}")
     public void addMember(@Context Player sender, @Arg Player target, @Arg("cell") Option<Cell> cellOption) {
-        Cell cell = cellOption.orElseGet(() -> getCellInRegion(sender).orElse(null));
+        Cell cell = cellOption.orElseGet(() -> api.getCellAtLocation(sender.getLocation()).orElse(null));
         if(cell == null) {
             sender.sendMessage("§cDu skal skrive en celle");
             return;
@@ -104,7 +104,7 @@ public class CellCommand implements CommandService {
     @Completion(arg = "cell", value = "@cells:owned")
     @Executor(pattern = {"#{commandCellMemberRemoveAlias}"}, description = "${commandCellMemberRemoveDescription}", usage = "${commandCellMemberRemoveUsage}")
     public void removeMember(@Context Player sender, @Arg CellUser target, @Arg("cell") Option<Cell> cellOption) {
-        Cell cell = cellOption.orElseGet(() -> getCellInRegion(sender).orElse(null));
+        Cell cell = cellOption.orElseGet(() -> api.getCellAtLocation(sender.getLocation()).orElse(null));
         if(cell == null) {
             sender.sendMessage("§cDu skal skrive en celle");
             return;
@@ -138,7 +138,7 @@ public class CellCommand implements CommandService {
     @Completion(arg = "cell", value = "@cells:permitted")
     @Executor(pattern = {"#{commandCellInfoAlias}"}, description = "${commandCellInfoDescription}", usage = "${commandCellInfoUsage}")
     public void info(@Context Player player, @Arg("cell") Option<Cell> cellOption) {
-        Cell cell = cellOption.orElseGet(() -> getCellInRegion(player).orElse(null));
+        Cell cell = cellOption.orElseGet(() -> api.getCellAtLocation(player.getLocation()).orElse(null));
         if(cell == null) {
             player.sendMessage("§cDu skal skrive en celle");
             return;
@@ -213,8 +213,4 @@ public class CellCommand implements CommandService {
         chain.sync(() -> player.teleport(cell.getTeleport().asBukkit())).execute();
     }
 
-    protected Optional<Cell> getCellInRegion(Player player) {
-        return worldGuard.getHighestPriority(player.getLocation())
-                .flatMap(region -> stores.getCellStore().getFromRegion(region.getId(), player.getWorld().getName()));
-    }
 }
