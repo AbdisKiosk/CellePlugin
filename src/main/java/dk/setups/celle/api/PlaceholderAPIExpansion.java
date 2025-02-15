@@ -5,6 +5,7 @@ import dk.setups.celle.cell.Cell;
 import dk.setups.celle.cell.CellGroup;
 import dk.setups.celle.database.CellGroupStore;
 import dk.setups.celle.database.CellStore;
+import dk.setups.celle.database.UserStore;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,10 +17,12 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
     private final CellGroupStore cellGroupStore;
     private final CellStore cellStore;
+    private final UserStore userStore;
 
-    public PlaceholderAPIExpansion(CellGroupStore cellGroupStore, CellStore cellStore) {
+    public PlaceholderAPIExpansion(CellGroupStore cellGroupStore, CellStore cellStore, UserStore userStore) {
         this.cellGroupStore = cellGroupStore;
         this.cellStore = cellStore;
+        this.userStore = userStore;
     }
 
     @Override
@@ -39,8 +42,12 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player player, String params) {
-        if(!Bukkit.isPrimaryThread()) {
-            throw new IllegalStateException("Cannot use placeholders from main thread!");
+        if(player != null) {
+            if(params.equals("owned")) {
+                return cellStore.getOwnedCells(userStore.get(player)).stream()
+                        .map(Cell::getName)
+                        .collect(Collectors.joining(","));
+            }
         }
 
         String[] splitParams = params.split("_");

@@ -119,7 +119,8 @@ public class CellePlugin extends OkaeriBukkitPlugin {
     @Planned(ExecutionPhase.POST_SETUP)
     public void registerPlaceholders(StoreManager storeManager) {
         PlaceholderAPIExpansion placeholderAPIExpansion =
-                new PlaceholderAPIExpansion(storeManager.getGroupStore(), storeManager.getCellStore());
+                new PlaceholderAPIExpansion(storeManager.getGroupStore(), storeManager.getCellStore(),
+                        storeManager.getUserStore());
         placeholderAPIExpansion.register();
     }
 
