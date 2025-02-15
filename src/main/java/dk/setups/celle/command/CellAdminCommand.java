@@ -98,6 +98,7 @@ public class CellAdminCommand implements CommandService {
                     .sendTo(executor);
         }
     }
+
     @Executor(pattern = "#{commandCeaCreateCellAlias}", description = "${commandCeaCreateCellDescription}", usage = "${commandCeaCreateCellUsage}")
     @Async
     public TaskerChain<Cell> createCell(@Context Player executor, @Arg CellGroup group, @Arg ProtectedRegion region, @Arg String name) {
@@ -395,6 +396,26 @@ public class CellAdminCommand implements CommandService {
 
             sender.performCommand(parsedCommand);
         }
+    }
+
+    @Executor(pattern = "#{commandCeaTeleportOtherAlias}", description = "${commandCeaTeleportOtherDescription}", usage = "${commandCeaTeleportOtherUsage}")
+    @Async
+    public void teleportOther(@Context CommandSender sender, @Arg Player target, @Arg Cell cell) {
+        CellTeleport cellTeleport = cell.getTeleport();
+        if(cellTeleport == null) {
+            i18n.get(lang.getCommandCeaTeleportOtherNoTeleport())
+                    .with("cell", cell)
+                    .sendTo(sender);
+            return;
+        }
+
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            target.teleport(cellTeleport.asBukkit());
+            i18n.get(lang.getCommandCeaTeleportOtherSuccess())
+                    .with("cell", cell)
+                    .with("target", target)
+                    .sendTo(sender);
+        });
     }
 
     @Executor(pattern = "#{commandCeaSignGUIDeleteAlias}", description = "${commandCeaSignGUIDeleteDescription}", usage = "${commandCeaSignGUIDeleteUsage}")

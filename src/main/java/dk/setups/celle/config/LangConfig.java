@@ -255,6 +255,12 @@ public class LangConfig extends LocaleConfig {
     private String commandCeaCommandEachUsage = "cea commandeach <kommando>";
     private String commandCeaCommandEachSentCommand = "§aSkrev §2{command}";
 
+    private String commandCeaTeleportOtherAlias = "teleport * *";
+    private String commandCeaTeleportOtherDescription = "Teleporterer spilleren til cellen";
+    private String commandCeaTeleportOtherUsage = "cea teleport <spiller> <celle>";
+    private String commandCeaTeleportOtherNoTeleport = "&cCellen har ikke nogen teleport-lokation.";
+    private String commandCeaTeleportOtherSuccess = "§aTeleportede §2{target.name}§a til §2{cell.name}§a.";
+
     /**
      * Cell Click Events
      */
