@@ -29,9 +29,8 @@ public class UserStore extends BaseStore<Integer, CellUser> {
         try {
             return Optional.ofNullable(getDao().queryBuilder()
                     .where()
-                    .like("mc_name", name)
-                    .queryForFirst()
-            );
+                    .rawComparison("LOWER(mc_name)", "=", name.toLowerCase())
+                    .queryForFirst());
         } catch (Exception exception) {
             exception.printStackTrace();
             return Optional.empty();
