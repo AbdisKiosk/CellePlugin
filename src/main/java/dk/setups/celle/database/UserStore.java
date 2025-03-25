@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import dk.setups.celle.cell.CellUser;
 import org.bukkit.OfflinePlayer;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -27,15 +28,19 @@ public class UserStore extends BaseStore<Integer, CellUser> {
 
     public Optional<CellUser> get(String name) {
         try {
-            return Optional.ofNullable(getDao().queryBuilder()
-                    .where()
-                    .rawComparison("LOWER(mc_name)", "=", name.toLowerCase())
-                    .queryForFirst());
+            List<CellUser> result = getDao().queryRaw(
+                    "SELECT * FROM cell_users WHERE LOWER(mc_name) = ? LIMIT 1",
+                    getDao().getRawRowMapper(),
+                    name.toLowerCase()
+            ).getResults();
+
+            return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
         } catch (Exception exception) {
             exception.printStackTrace();
             return Optional.empty();
         }
     }
+
 
     public CellUser get(UUID uuid, String name) {
         return get("mc_uuid", uuid).orElseGet(() -> {
