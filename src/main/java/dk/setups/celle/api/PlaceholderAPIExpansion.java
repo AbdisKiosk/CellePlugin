@@ -41,6 +41,11 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
     }
 
     @Override
+    public boolean persist() {
+        return true;
+    }
+
+    @Override
     public String onPlaceholderRequest(Player player, String params) {
         if(player != null) {
             if(params.equals("owned")) {
