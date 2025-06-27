@@ -72,15 +72,15 @@ public class CellGroup {
     }
 
     public String getRentPermission() {
-        return "cell.rent." + getName();
+        return "cell.rent." + getName().toLowerCase();
     }
 
     public String getExtendPermission() {
-        return "cell.extend." + getName();
+        return "cell.extend." + getName().toLowerCase();
     }
 
     public String getMemberPermission() {
-        return "cell.member." + getName();
+        return "cell.member." + getName().toLowerCase();
     }
 
     public Long getRentTimeMillis() {

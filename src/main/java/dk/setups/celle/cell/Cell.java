@@ -107,7 +107,7 @@ public class Cell {
     }
 
     public String getRentPermission() {
-        return "cell.rent." + getGroup().getName() + "." + getName();
+        return "cell.rent." + getGroup().getName().toLowerCase() + "." + getName().toLowerCase();
     }
 
     public boolean isOwner(CellUser user) {
