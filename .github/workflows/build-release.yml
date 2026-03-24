@@ -1,0 +1,33 @@
+name: Build and Release
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: gradle
+
+      - name: Build with Gradle
+        run: ./gradlew --no-daemon build
+
+      - name: Publish build artifact to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          tag: build-${{ github.sha }}
+          name: Build ${{ github.sha }}
+          body: Automated build for `${{ github.sha }}`
+          prerelease: true
+          artifacts: build/libs/*-combined.jar
