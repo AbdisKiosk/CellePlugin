@@ -55,6 +55,7 @@ public class JoinListener implements Listener {
                  });
              });
         });
+        stores.getUserStore().update(player);
     }
 
 }

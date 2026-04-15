@@ -26,12 +26,12 @@ public class UserStore extends BaseStore<Integer, CellUser> {
         return get(player.getUniqueId(), player.getName());
     }
 
-    public Optional<CellUser> get(String name) {
+    public Optional<CellUser> get(String nameOrUUID) {
         try {
             List<CellUser> result = getDao().queryRaw(
-                    "SELECT * FROM cell_users WHERE LOWER(mc_name) = ? LIMIT 1",
+                    "SELECT * FROM cell_users WHERE LOWER(mc_name) = ? OR mc_uuid = ? OR LIMIT 1",
                     getDao().getRawRowMapper(),
-                    name.toLowerCase()
+                    nameOrUUID.toLowerCase(), nameOrUUID.toLowerCase()
             ).getResults();
 
             return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
