@@ -29,7 +29,7 @@ public class UserStore extends BaseStore<Integer, CellUser> {
     public Optional<CellUser> get(String nameOrUUID) {
         try {
             List<CellUser> result = getDao().queryRaw(
-                    "SELECT * FROM cell_users WHERE LOWER(mc_name) = ? OR mc_uuid = ? OR LIMIT 1",
+                    "SELECT * FROM cell_users WHERE LOWER(mc_name) = ? OR mc_uuid = ? LIMIT 1",
                     getDao().getRawRowMapper(),
                     nameOrUUID.toLowerCase(), nameOrUUID.toLowerCase()
             ).getResults();
